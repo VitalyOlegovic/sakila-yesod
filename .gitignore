@@ -17,3 +17,6 @@ cabal.sandbox.config
 *.eventlog
 .stack-work/
 cabal.project.local
+yesod-devel/devel-terminate
+yesod-devel/rebuild
+yesod-devel
