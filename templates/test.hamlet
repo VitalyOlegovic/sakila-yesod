@@ -3,6 +3,6 @@
     <h1>
         Prova
     <p>
-        Testo normale.
-        $forall Entity personKey person <- userList
-            #{keyToValues person}
+        Testo normale.<br/>
+        $forall Entity userKey user <- userList
+            #{userIdent user}
