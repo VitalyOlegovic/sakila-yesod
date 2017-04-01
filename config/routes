@@ -9,4 +9,7 @@
 /comments CommentR POST
 
 /profile ProfileR GET
+
 /actor ActorListR GET
+/newactor NewActorR GET
+/createactor CreateActorR POST

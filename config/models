@@ -17,6 +17,6 @@ Actor
     Id Int sql=actor_id
     firstName Text
     lastName Text
-    lastUpdate UTCTime
+    lastUpdate UTCTime default=CURRENT_DATE
 
  -- By default this file is used in Model.hs (which is imported by Foundation.hs)

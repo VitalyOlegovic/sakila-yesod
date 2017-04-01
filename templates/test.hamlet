@@ -1,8 +1,0 @@
-<div .ui.container>
-
-    <h1>
-        Prova
-    <p>
-        Testo normale.<br/>
-        $forall Entity userKey user <- userList
-            #{userIdent user}
