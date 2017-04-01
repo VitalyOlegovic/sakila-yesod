@@ -1,16 +1,17 @@
 <div .ui.container>
 
     <h1>
-        New actor
+        Edit actor
     <p>
         <form action=@{CreateActorR} method="POST">
+            <input type=hidden name=actorId value="#{actorId}">
             <p>
                 Fist name
                 <br>
-                <input type=text name=firstName>
+                <input type=text name=firstName value="#{actorFirstName actor}">
             <p>
                 Last name
                 <br>
-                <input type=text name=lastName>
+                <input type=text name=lastName value="#{actorLastName actor}">
             <br>
             <input type=submit>

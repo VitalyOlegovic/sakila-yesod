@@ -1,6 +1,9 @@
 module Handler.ActorHandler where
 
 import Import
+import Database.Persist.Sql
+import Database.Persist.Types (PersistValue(PersistInt64))
+import Database.Persist.Class
 
 getActorListR :: Handler Html
 getActorListR = do
@@ -30,9 +33,13 @@ postCreateActorR = do
 getEditActorR :: Handler Html
 getEditActorR = do
     actorId <- runInputGet $ ireq intField "id"
-    --actor <- runDB $ get $ Key $ toPersistValue actorId
-    defaultLayout $ do
-        $(widgetFile "actor-edit")
+    maybeActor <- runDB $ get $ ActorKey actorId
+    case maybeActor of
+        Just actor -> defaultLayout $ do
+            $(widgetFile "actor-edit")
+        Nothing -> defaultLayout $ do
+            $(widgetFile "actor-new")
+    
 
 getDeleteActorR :: Handler Html
 getDeleteActorR = do
