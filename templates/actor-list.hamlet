@@ -1,0 +1,26 @@
+<div .ui.container>
+
+    <h1>
+        Actor list
+    <p>
+        <table width="100%">
+            <tr>
+                <th>
+                    ID
+                <th>
+                    FIRST NAME
+                <th>
+                    LAST NAME
+                <th>
+                    LAST UPDATE
+            
+            $forall Entity actorKey actor <- actorList
+                <tr>
+                    <td>
+                        #{unActorKey actorKey}
+                    <td>
+                        #{actorFirstName actor}
+                    <td>
+                        #{actorLastName actor}
+                    <td>
+                        #{show $ actorLastUpdate actor}
