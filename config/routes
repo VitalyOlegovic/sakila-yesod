@@ -13,3 +13,5 @@
 /actor ActorListR GET
 /newactor NewActorR GET
 /createactor CreateActorR POST
+/editactor EditActorR GET
+/deleteactor DeleteActorR GET

@@ -1,0 +1,16 @@
+<div .ui.container>
+
+    <h1>
+        New actor
+    <p>
+        <form action=@{CreateActorR} method="POST">
+            <p>
+                Fist name
+                <br>
+                <input type=text name=firstName>
+            <p>
+                Last name
+                <br>
+                <input type=text name=lastName>
+            <br>
+            <input type=submit>

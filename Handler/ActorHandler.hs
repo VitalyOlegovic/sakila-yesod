@@ -19,9 +19,22 @@ getNewActorR = do
 
 postCreateActorR :: Handler Html
 postCreateActorR = do
-    actor <- runInputPost $ Actor
-                    <$> ireq textField "firstName"
-                    <*> ireq textField "lastName"
-    --insertedActor <- runDB $ insertEntity actor
+    firstName <- runInputPost $ ireq textField "firstName"
+    lastName <- runInputPost $ ireq textField "lastName"
+    now <- liftIO getCurrentTime
+    let actor = Actor firstName lastName now
+    insertedActor <- runDB $ insertEntity actor
     defaultLayout $ do
         $(widgetFile "actor-new")
+
+getEditActorR :: Handler Html
+getEditActorR = do
+    actorId <- runInputGet $ ireq intField "id"
+    --actor <- runDB $ get $ Key $ toPersistValue actorId
+    defaultLayout $ do
+        $(widgetFile "actor-edit")
+
+getDeleteActorR :: Handler Html
+getDeleteActorR = do
+    defaultLayout $ do
+        $(widgetFile "actor-delete")

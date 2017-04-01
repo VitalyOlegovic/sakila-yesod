@@ -13,6 +13,10 @@
                     LAST NAME
                 <th>
                     LAST UPDATE
+                <th>
+                    EDIT
+                <th>
+                    DELETE
             
             $forall Entity actorKey actor <- actorList
                 <tr>
@@ -24,3 +28,9 @@
                         #{actorLastName actor}
                     <td>
                         #{show $ actorLastUpdate actor}
+                    <td>
+                        <a href="editactor?id=#{unActorKey actorKey}">
+                            Edit
+                    <td>
+                        <a href="deleteactor?id=#{unActorKey actorKey}">
+                            Delete

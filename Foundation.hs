@@ -148,6 +148,8 @@ instance Yesod App where
     isAuthorized ActorListR _ = return Authorized
     isAuthorized NewActorR _ = return Authorized
     isAuthorized CreateActorR _ = return Authorized
+    isAuthorized EditActorR _ = return Authorized
+    isAuthorized DeleteActorR _ = return Authorized
 
     isAuthorized ProfileR _ = isAuthenticated
 
