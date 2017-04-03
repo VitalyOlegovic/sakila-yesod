@@ -14,4 +14,5 @@
 /newactor NewActorR GET
 /createactor CreateActorR POST
 /editactor EditActorR GET
+/updateactor UpdateActorR POST
 /deleteactor DeleteActorR GET

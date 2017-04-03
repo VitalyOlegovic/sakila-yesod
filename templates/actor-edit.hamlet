@@ -3,7 +3,7 @@
     <h1>
         Edit actor
     <p>
-        <form action=@{CreateActorR} method="POST">
+        <form action=@{UpdateActorR} method="POST">
             <input type=hidden name=actorId value="#{actorId}">
             <p>
                 Fist name

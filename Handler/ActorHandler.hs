@@ -40,6 +40,17 @@ getEditActorR = do
         Nothing -> defaultLayout $ do
             $(widgetFile "actor-new")
     
+postUpdateActorR :: Handler Html
+postUpdateActorR = do
+    actorId <- runInputPost $ ireq intField "actorId"
+    firstName <- runInputPost $ ireq textField "firstName"
+    lastName <- runInputPost $ ireq textField "lastName"
+    now <- liftIO getCurrentTime
+    let actor = Actor firstName lastName now
+    runDB $ replace (ActorKey actorId) $ actor
+    -- getActorListR
+    defaultLayout $ do
+        $(widgetFile "actor-delete")
 
 getDeleteActorR :: Handler Html
 getDeleteActorR = do
