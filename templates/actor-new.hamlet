@@ -13,4 +13,4 @@
                 <br>
                 <input type=text name=lastName>
             <br>
-            <input type=submit>
+            <input .btn.btn-primary type=submit>

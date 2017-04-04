@@ -14,4 +14,4 @@
                 <br>
                 <input type=text name=lastName value="#{actorLastName actor}">
             <br>
-            <input type=submit>
+            <input .btn.btn-primary type=submit>
