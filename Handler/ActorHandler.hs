@@ -1,9 +1,6 @@
 module Handler.ActorHandler where
 
 import Import
-import Database.Persist.Sql
-import Database.Persist.Types (PersistValue(PersistInt64))
-import Database.Persist.Class
 
 getActorListR :: Handler Html
 getActorListR = do
@@ -26,9 +23,8 @@ postCreateActorR = do
     lastName <- runInputPost $ ireq textField "lastName"
     now <- liftIO getCurrentTime
     let actor = Actor firstName lastName now
-    insertedActor <- runDB $ insertEntity actor
-    defaultLayout $ do
-        $(widgetFile "actor-new")
+    _ <- ($) runDB $ insertEntity actor
+    getActorListR
 
 getEditActorR :: Handler Html
 getEditActorR = do
@@ -37,8 +33,7 @@ getEditActorR = do
     case maybeActor of
         Just actor -> defaultLayout $ do
             $(widgetFile "actor-edit")
-        Nothing -> defaultLayout $ do
-            $(widgetFile "actor-new")
+        Nothing -> getActorListR
     
 postUpdateActorR :: Handler Html
 postUpdateActorR = do
@@ -48,11 +43,10 @@ postUpdateActorR = do
     now <- liftIO getCurrentTime
     let actor = Actor firstName lastName now
     runDB $ replace (ActorKey actorId) $ actor
-    -- getActorListR
-    defaultLayout $ do
-        $(widgetFile "actor-delete")
+    getActorListR
 
 getDeleteActorR :: Handler Html
 getDeleteActorR = do
-    defaultLayout $ do
-        $(widgetFile "actor-delete")
+    actorId <- runInputGet $ ireq intField "id"
+    runDB $ delete (ActorKey actorId)
+    getActorListR
