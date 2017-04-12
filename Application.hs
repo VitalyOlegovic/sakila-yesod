@@ -22,7 +22,7 @@ import GHC.IO                               (unsafeUnmask)
 #endif
 import Control.Monad.Logger                 (liftLoc, runLoggingT)
 import Database.Persist.MySQL               (createMySQLPool, myConnInfo,
-                                             myPoolSize)
+                                             myPoolSize, runSqlPool)
 import qualified Database.MySQL.Base as MySQL
 import Import
 import Language.Haskell.TH.Syntax           (qLocation)
@@ -87,7 +87,7 @@ makeFoundation appSettings = do
         (myPoolSize $ appDatabaseConf appSettings)
 
     -- Perform database migration using our application's logging settings.
-    -- runLoggingT (runSqlPool (runMigration migrateAll) pool) logFunc
+    runLoggingT (runSqlPool (runMigration migrateAll) pool) logFunc
 
     -- Return the foundation
     return $ mkFoundation pool

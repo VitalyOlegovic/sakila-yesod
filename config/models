@@ -1,22 +1,22 @@
 User
-    ident Text
-    password Text Maybe
+    ident Text sqltype=varchar(255)
+    password Text Maybe sqltype=varchar(255) default=NULL
     UniqueUser ident
     deriving Typeable
 Email
-    email Text
-    userId UserId Maybe
-    verkey Text Maybe
+    email Text sqltype=varchar(255) 
+    userId UserId Maybe default=NULL
+    verkey Text Maybe default=NULL
     UniqueEmail email
 Comment json -- Adding "json" causes ToJSON and FromJSON instances to be derived.
-    message Text
-    userId UserId Maybe
+    message Text sqltype=varchar(255)
+    userId UserId Maybe default=NULL
     deriving Eq
     deriving Show
 Actor
     Id Int sql=actor_id
-    firstName Text
-    lastName Text
-    lastUpdate UTCTime default=CURRENT_DATE
+    firstName Text sqltype=varchar(255)
+    lastName Text sqltype=varchar(255)
+    lastUpdate UTCTime sqltype=timestamp default=CURRENT_TIMESTAMP
 
  -- By default this file is used in Model.hs (which is imported by Foundation.hs)
