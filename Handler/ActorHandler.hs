@@ -1,6 +1,12 @@
 module Handler.ActorHandler where
 
 import Import
+import Data.Text as T
+
+firstNameErrorMessage :: Text
+firstNameErrorMessage = "First name cannot be empty"
+lastNameErrorMessage :: Text
+lastNameErrorMessage = "First name cannot be empty"
 
 getActorListR :: Handler Html
 getActorListR = do
@@ -21,8 +27,8 @@ getNewActorR = do
 postCreateActorR :: Handler Html
 postCreateActorR = do
     -- Get the request parameters
-    firstName <- runInputPost $ ireq textField "firstName"
-    lastName <- runInputPost $ ireq textField "lastName"
+    firstName <- runInputPost $ ireq firstNameField "firstName"
+    lastName <- runInputPost $ ireq lastNameField "lastName"
     -- Get the current time
     now <- liftIO getCurrentTime
     -- Create an actor
@@ -30,6 +36,20 @@ postCreateActorR = do
     -- Insert the actor in the database. Discard the result
     _ <- ($) runDB $ insertEntity actor
     getActorListR
+
+firstNameField :: (RenderMessage (HandlerSite m) FormMessage, Monad m) => Field m Text
+firstNameField = check validateFirstName textField
+
+validateFirstName :: Text -> Either Text Text
+validateFirstName s =
+    if T.null $ strip s then Left firstNameErrorMessage else Right s
+
+lastNameField :: (RenderMessage (HandlerSite m) FormMessage, Monad m) => Field m Text
+lastNameField = check validateLastName textField
+
+validateLastName :: Text -> Either Text Text
+validateLastName s =
+    if T.null $ strip s then Left lastNameErrorMessage else Right s
 
 getEditActorR :: Handler Html
 getEditActorR = do
@@ -43,7 +63,7 @@ getEditActorR = do
             $(widgetFile "actor-edit")
         -- Otherwise, just show the actor list
         Nothing -> getActorListR
-    
+
 postUpdateActorR :: Handler Html
 postUpdateActorR = do
     -- Get the parameters from the request
@@ -55,7 +75,7 @@ postUpdateActorR = do
     -- Create an Actor instance
     let actor = Actor firstName lastName now
     -- Replace the old actor data with the new values
-    runDB $ replace (ActorKey actorId) $ actor
+    runDB $ Import.replace (ActorKey actorId) $ actor
     getActorListR
 
 getDeleteActorR :: Handler Html
