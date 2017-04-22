@@ -2,11 +2,12 @@ module Handler.ActorHandler where
 
 import Import
 import Data.Text as T
+import Data.Char as C
 
 firstNameErrorMessage :: Text
-firstNameErrorMessage = "First name cannot be empty"
+firstNameErrorMessage = "First name not valid"
 lastNameErrorMessage :: Text
-lastNameErrorMessage = "First name cannot be empty"
+lastNameErrorMessage = "Last name not valid"
 
 getActorListR :: Handler Html
 getActorListR = do
@@ -42,14 +43,22 @@ firstNameField = check validateFirstName textField
 
 validateFirstName :: Text -> Either Text Text
 validateFirstName s =
-    if T.null $ strip s then Left firstNameErrorMessage else Right s
+    if isNameValid s then Right s else Left firstNameErrorMessage
 
 lastNameField :: (RenderMessage (HandlerSite m) FormMessage, Monad m) => Field m Text
 lastNameField = check validateLastName textField
 
 validateLastName :: Text -> Either Text Text
 validateLastName s =
-    if T.null $ strip s then Left lastNameErrorMessage else Right s
+    if isNameValid s then Right s else Left lastNameErrorMessage
+
+isNameValid :: Text -> Bool
+isNameValid s =
+  (and $ Import.map isNameCharValid (T.unpack s))
+  && (not $ T.null $ strip s)
+
+isNameCharValid :: Char -> Bool
+isNameCharValid c = isAlpha c || isSpace c
 
 getEditActorR :: Handler Html
 getEditActorR = do
