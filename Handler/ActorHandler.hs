@@ -52,11 +52,13 @@ validateLastName :: Text -> Either Text Text
 validateLastName s =
     if isNameValid s then Right s else Left lastNameErrorMessage
 
+-- A name is valid if it is not empty and every char is alphabetic or a space
 isNameValid :: Text -> Bool
 isNameValid s =
   (and $ Import.map isNameCharValid (T.unpack s))
   && (not $ T.null $ strip s)
 
+-- A name char is valid if it is alphabetic or it is a space
 isNameCharValid :: Char -> Bool
 isNameCharValid c = isAlpha c || isSpace c
 

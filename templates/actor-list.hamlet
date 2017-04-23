@@ -3,6 +3,9 @@
     <h1>
         Actor list
     <p>
+      <form action=@{NewActorR} method="GET">
+        <input .btn.btn-primary type=submit value="New Actor">
+    <p>
         <table width="100%">
             <tr>
                 <th>
@@ -17,7 +20,7 @@
                     EDIT
                 <th>
                     DELETE
-            
+
             $forall Entity actorKey actor <- actorList
                 <tr>
                     <td>
